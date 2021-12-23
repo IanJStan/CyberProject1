@@ -9,6 +9,7 @@ Ian Stanford 23 December, 2021
 This Repository contains files and a diagram for the Project One Azure cloud-based Elk Stack network environment below.![ProjectOneDiagram.png](https://github.com/IanJStan/CyberProject1/blob/main/Diagrams/ProjectOneDiagram.png)
 I was able to successfully create and launch an Elk Stack monitoring server into my Azure network. Many of the files used for YAML playbooks and configurations were pre-constructed for the class to avoid any manual errors. Each script only needed minor changes with internal IP addresses and use of ports. 
 
+---
 ### Topology of the Network
 I first constructed an Azure environment in the previous week by creating an Azure account. THe first task is to construct a Red Team Resource Group which the entire network will be contained in. The first of two Virtual Networks were created within the resource group. The Red Team Virtual Network encompasses the Red Team network environment to include the firewall, Jump Box Provisioner, the Load Balancer, and the two DVWA eb servers. The Elk Net Virtual Network encompasses the Elk server network to include the firewall and the VM containing the Elk environement. Both networks are *peered* to each other to allows for a seamless communications connection between the two networks. 
 
@@ -30,6 +31,22 @@ A Red Team Load Balancer was put into the network to forward HTTP standard TCP t
 | Host               | 72.50.206.6   |     N/A    | Local Host    | All            | All             |
 
 
+---
+#### Network Security Groups and Firewalls
+Two NSG firewalls were deployed with in the resource group. The RedTeamNSG secured the Red Team virtual network using three manual Inbound Security Rules along with built-in rules:
+| Priority  |  Name          | Port  | Protocol | Source       | Destination     | Service | Function                  |
+|:---------:|:--------------:|:-----:|:--------:|:------------:|:---------------:|:-------:|--------------------------:|
+| 499       | Access to Vnet | 80    | TCP      | 72.50.206.6  | Virtual Network | HTTP    | Access to Virtual Network |
+| 500       | AllowSSH       | 22    | TCP      | 72.50.206.6  | Virtual Network | SSH     | Allow access from my IP   |
+| 501       | JumpBox-Access | 22    | TCP      | 10.0.0.4     | Virtual Network | SSH     | SSH access from Jump Box  |
+
+The Elk1nsg743 secured the ELK-NET virtual network using two Inbound Security Rules along with built-in rules:
+| Priority  |  Name          | Port  | Protocol | Source       | Destination     | Service | Function                  |
+|:---------:|:--------------:|:-----:|:--------:|:------------:|:---------------:|:-------:|--------------------------:|
+| 200       | Elk5601TCP     | 5601  | TCP      | 72.50.206.6  | Virtual Network | Custom  | Elk port 5601 TCP         |
+| 300       | SSH            | 22    | TCP      |     Any      |      Any        | SSH     | Port 22 to Internet       |
+
+---
 #### ELK Stack Installation
 Within the Elk Net Virtual Network another VM was created to act as a server for the Elk Stack monitoring applications to include:
 1. Elasticsearch
@@ -41,6 +58,6 @@ From the JumpBox Provisioner asymmetric keys were created to configure the new E
 * docker.io
 * python3-pip
 * docker, which is the Docker Python pip module
-This ELK server is running on port 5601. With [Kibana](https://elestic.com/kibana/kibana-dashboard/) monitoring installed and working through http://40.117.89.35:5601/app/kibana (ELK server is not currently running), Beats were added through Elastic using Filebeat and Metricbeat. This allows for monitoring of the webservers for vulnerabilities that may appear in system logs and data. ELK enables the ability to search, analyze, and store monitoring activity, and to present it visually for analysis. 
+This ELK server is running on port 5601. With [Kibana](https://elestic.com/kibana/kibana-dashboard/) monitoring installed and working through http://40.117.89.35:5601/app/kibana (this ELK server is not currently running), Beats were added through Elastic using Filebeat and Metricbeat. This allows for monitoring of the webservers for vulnerabilities that may appear in system logs and data. ELK enables the ability to search, analyze, and store monitoring activity, and to present it visually for analysis. 
 Kibana monitoring from Elk Stack server:
 ![Kibana screenshot](https://user-images.githubusercontent.com/96362831/147275913-ed9b83a1-bd2c-4d13-a906-9218d0a94273.png)
