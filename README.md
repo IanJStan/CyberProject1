@@ -5,8 +5,8 @@ Ian Stanford 23 December, 2021
 
 ---
 ## Project one -Azure Cloud Environment with Elk Stack Monitoring
-### -Cloud environment and security with an Elk Stack monitoiring deployment within the internal network. 
-This Repository contains files and a diagram for the Project One Azure cloud-based Elk Stack network environment.![ProjectOneDiagram.png](https://github.com/IanJStan/CyberProject1/blob/main/Diagrams/ProjectOneDiagram.png)
+### A Cloud environment and security with an Elk Stack monitoiring deployment within the internal network. 
+This Repository contains files and a diagram for the Project One Azure cloud-based Elk Stack network environment below.![ProjectOneDiagram.png](https://github.com/IanJStan/CyberProject1/blob/main/Diagrams/ProjectOneDiagram.png)
 I was able to successfully create and launch an Elk Stack monitoring server into my Azure network. Many of the files used for YAML playbooks and configurations were pre-constructed for the class to avoid any manual errors. Each script only needed minor changes with internal IP addresses and use of ports. 
 
 ### Topology of the Network
@@ -20,6 +20,16 @@ Docker container was installed onto the Jumpbox Provisioner in order to run appl
 
 A Red Team Load Balancer was put into the network to forward HTTP standard TCP traffic through port 80 to the Red Team virtual network. A backend pool and health probes were added for reducancy and vunerability protections. 
 
+| Name               | Public IP     | Private IP | Function      | Security Group | Virtual Network |
+|:------------------:|:-------------:|:----------:|:-------------:|:--------------:|:---------------:|
+| JumpBoxProvisioner | 40.122.54.192 | 10.0.0.4   | Gateway       | RedTeamNSG     | Red Team        |
+| Web-1              | 13.67.151.73  | 10.0.0.5   | DVWA          | RedTeamNSG     | Red Team        |
+| Web-2              | 13.67.151.73  | 10.0.0.6   | DVWA          | RedTeamNSG     | Red Team        |
+| Red-Team-LB        | 13.67.151.73  |     N/A    | Load Balancer | RedTeamNSG     | Red Team        |
+| Elk-1		           | 40.117.89.35  | 10.1.0.5   | Monitoring    | Elk1nsg743     | ELK-NET         |
+| Host               | 72.50.206.6   |     N/A    | Local Host    | All            | All             |
+
+
 #### ELK Stack Installation
 Within the Elk Net Virtual Network another VM was created to act as a server for the Elk Stack monitoring applications to include:
 1. Elasticsearch
@@ -32,3 +42,5 @@ From the JumpBox Provisioner asymmetric keys were created to configure the new E
 * python3-pip
 * docker, which is the Docker Python pip module
 This ELK server is running on port 5601. With [Kibana](https://elestic.com/kibana/kibana-dashboard/) monitoring installed and working through http://40.117.89.35:5601/app/kibana (ELK server is not currently running), Beats were added through Elastic using Filebeat and Metricbeat. This allows for monitoring of the webservers for vulnerabilities that may appear in system logs and data. ELK enables the ability to search, analyze, and store monitoring activity, and to present it visually for analysis. 
+Kibana monitoring from Elk Stack server:
+![Kibana screenshot](https://user-images.githubusercontent.com/96362831/147275913-ed9b83a1-bd2c-4d13-a906-9218d0a94273.png)
