@@ -21,14 +21,14 @@ A Docker container was installed onto the Jumpbox Provisioner in order to run ap
 
 A Red Team Load Balancer was put into the network to forward HTTP standard TCP traffic through port 80 to the Red Team virtual network. A backend pool and health probes were added for reducancy, health monitoring, and vunerability protections. 
 
-| Name               | Public IP     | Private IP | Function      | Security Group | Virtual Network |
-|:------------------:|:-------------:|:----------:|:-------------:|:--------------:|:---------------:|
-| JumpBoxProvisioner | 40.122.54.192 | 10.0.0.4   | Gateway       | RedTeamNSG     | Red Team        |
-| Web-1              | 13.67.151.73  | 10.0.0.5   | DVWA          | RedTeamNSG     | Red Team        |
-| Web-2              | 13.67.151.73  | 10.0.0.6   | DVWA          | RedTeamNSG     | Red Team        |
-| Red-Team-LB        | 13.67.151.73  |     N/A    | Load Balancer | RedTeamNSG     | Red Team        |
-| Elk-1		           | 40.117.89.35  | 10.1.0.5   | Monitoring    | Elk1nsg743     | ELK-NET         |
-| Host               | 72.50.206.6   |     N/A    | Local Host    | All            | All             |
+| Name               | Public IP     | Private IP | Function      | Security Group | Virtual Network |   OS       |
+|:------------------:|:-------------:|:----------:|:-------------:|:--------------:|:---------------:|:----------:|
+| JumpBoxProvisioner | 40.122.54.192 | 10.0.0.4   | Gateway       | RedTeamNSG     | Red Team        | Linux      |
+| Web-1              | 13.67.151.73  | 10.0.0.5   | DVWA          | RedTeamNSG     | Red Team        | Linux      |
+| Web-2              | 13.67.151.73  | 10.0.0.6   | DVWA          | RedTeamNSG     | Red Team        | Linux      |
+| Red-Team-LB        | 13.67.151.73  |     N/A    | Load Balancer | RedTeamNSG     | Red Team        | Linux      |
+| Elk-1		           | 40.117.89.35  | 10.1.0.5   | Monitoring    | Elk1nsg743     | ELK-NET         | Linux      |
+| Host               | 72.50.206.6   |     N/A    | Local Host    | All            | All             | Windows 10 |
 
 
 ---
