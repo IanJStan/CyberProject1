@@ -28,7 +28,7 @@ A Red Team Load Balancer was put into the network to forward HTTP standard TCP t
 | Web-2              | 13.67.151.73  | 10.0.0.6   | DVWA          | RedTeamNSG     | Red Team        | Linux      |
 | Red-Team-LB        | 13.67.151.73  |     N/A    | Load Balancer | RedTeamNSG     | Red Team        | Linux      |
 | Elk-1		           | 40.117.89.35  | 10.1.0.5   | Monitoring    | Elk1nsg743     | ELK-NET         | Linux      |
-| Host               | 72.50.206.6   |     N/A    | Local Host    | All            | All             | Windows 10 |
+| Host               | My IP         |     N/A    | Local Host    | All            | All             | Windows 10 |
 
 
 ---
@@ -36,14 +36,14 @@ A Red Team Load Balancer was put into the network to forward HTTP standard TCP t
 Two NSG firewalls were deployed with in the resource group. The RedTeamNSG secured the Red Team virtual network using three manual Inbound Security Rules along with built-in rules:
 | Priority  |  Name          | Port  | Protocol | Source       | Destination     | Service | Function                  |
 |:---------:|:--------------:|:-----:|:--------:|:------------:|:---------------:|:-------:|--------------------------:|
-| 499       | Access to Vnet | 80    | TCP      | 72.50.206.6  | Virtual Network | HTTP    | Access to Virtual Network |
-| 500       | AllowSSH       | 22    | TCP      | 72.50.206.6  | Virtual Network | SSH     | Allow access from my IP   |
+| 499       | Access to Vnet | 80    | TCP      |    My IP     | Virtual Network | HTTP    | Access to Virtual Network |
+| 500       | AllowSSH       | 22    | TCP      |    My IP     | Virtual Network | SSH     | Allow access from my IP   |
 | 501       | JumpBox-Access | 22    | TCP      | 10.0.0.4     | Virtual Network | SSH     | SSH access from Jump Box  |
 
 The Elk1nsg743 secured the ELK-NET virtual network using two Inbound Security Rules along with built-in rules:
 | Priority  |  Name          | Port  | Protocol | Source       | Destination     | Service | Function                  |
 |:---------:|:--------------:|:-----:|:--------:|:------------:|:---------------:|:-------:|--------------------------:|
-| 200       | Elk5601TCP     | 5601  | TCP      | 72.50.206.6  | Virtual Network | Custom  | Elk port 5601 TCP         |
+| 200       | Elk5601TCP     | 5601  | TCP      |    My IP     | Virtual Network | Custom  | Elk port 5601 TCP         |
 | 300       | SSH            | 22    | TCP      |     Any      |      Any        | SSH     | Port 22 to Internet       |
 
 ---
